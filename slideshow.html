@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memories ❤️</title>
+
+<style>
+body { margin:0; overflow:hidden; background:black; }
+
+.slide {
+    position:absolute;
+    width:100%;
+    height:100vh;
+    object-fit:cover;
+    opacity:0;
+    transition:1s;
+}
+
+.active { opacity:1; }
+
+.text {
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:20px;
+}
+
+.ripple {
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,0.5);
+    transform:scale(0);
+    animation:ripple 0.6s linear;
+}
+
+@keyframes ripple {
+    to {
+        transform:scale(10);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body onclick="nextSlide(event)">
+
+<img src="photo1.jpg" class="slide active">
+<img src="photo2.jpg" class="slide">
+<img src="photo3.jpg" class="slide">
+<img src="photo4.jpg" class="slide">
+<img src="photo5.jpg" class="slide">
+<img src="photo6.jpg" class="slide">
+<img src="photo7.jpg" class="slide">
+<img src="photo8.jpg" class="slide">
+
+<div class="text">Tap anywhere… I need one more chance ❤️</div>
+
+<audio id="music" loop>
+<source src="song.mp3" type="audio/mp3">
+</audio>
+
+<script>
+let slides = document.querySelectorAll(".slide");
+let i = 0;
+let started = false;
+
+function nextSlide(e){
+
+    if(!started){
+        document.getElementById("music").play();
+        started = true;
+    }
+
+    let ripple = document.createElement("span");
+    ripple.className = "ripple";
+    ripple.style.left = e.clientX + "px";
+    ripple.style.top = e.clientY + "px";
+    document.body.appendChild(ripple);
+
+    setTimeout(()=>ripple.remove(),600);
+
+    slides[i].classList.remove("active");
+    i = (i+1) % slides.length;
+    slides[i].classList.add("active");
+}
+</script>
+
+</body>
+</html>
